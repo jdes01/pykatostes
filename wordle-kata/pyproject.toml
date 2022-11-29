@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "kata"
+version = "0.1.0"
+description = ""
+authors = ["Javier de Santiago <jsp@certainly.io>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+htmlparser = "^0.0.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
