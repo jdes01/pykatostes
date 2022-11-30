@@ -1,32 +1,25 @@
-from typing import Optional, Union
-
-def is_true():
-    return True
+import re
 
 class Calculator():
-    def __init__(self):
-        pass
     
-    def add(self, string: str) -> int:
+    @staticmethod
+    def add(string: str) -> int:
+
         if string == "":
             return 0
         
-        if "," in string:
-            return self.__split_string_and_sum(string)
+        if "\n" in string:
+            string = string.replace("\n", "")
         
-        return int(string)
-    
-    def __split_string_and_sum(self, string: str) -> int:
-        possible_numbers = "1234567890"
-        numbers = string.split(",")
-        
-        if len(numbers) != 2:
-            raise Exception("More than two numbers exception")
-        
-        if numbers[0] not in possible_numbers:
-            raise Exception("Not a number")
-        
-        if numbers[1] not in possible_numbers:
-            raise Exception("Not a number")
-        
-        return int(numbers[0]) + int(numbers[1])
+        if re.search("^//.{1}", string):
+            string = string.replace("//", "")
+            new_delimeter = string[0]
+            string = string[1:]
+            string = string.replace(new_delimeter, ",")
+            
+        if "," not in string:
+            return int(string)
+
+        numbers = [int(number) for number in string.split(",")]
+
+        return sum(numbers)
