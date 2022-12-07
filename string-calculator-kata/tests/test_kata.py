@@ -1,6 +1,8 @@
 import unittest
 
-from src.kata import Calculator
+import pytest
+
+from src.kata import Calculator, NegativeNumberException
 
 
 class StringCalculatorKata(unittest.TestCase):
@@ -72,3 +74,27 @@ class StringCalculatorKata(unittest.TestCase):
         
         # Assert
         self.assertEqual(returned_value, 6)
+
+    def test_negative_numbers_are_not_allowed(self):
+        
+        # Arrange
+        negative_numbers_string = "-1,2"
+
+        # Act
+        with pytest.raises(NegativeNumberException) as e:
+            Calculator.add(negative_numbers_string)
+            
+        # Assert
+        assert "Negative numbers found: [-1]" in str(e.value)
+
+    def test_returned_message_when_adding_multiple_negative_numbers(self):
+        
+        # Arrange
+        negative_numbers_string = "-1,-2,-3"
+
+        # Act
+        with pytest.raises(NegativeNumberException) as e:
+            Calculator.add(negative_numbers_string)
+            
+        # Assert
+        assert "Negative numbers found: [-1, -2, -3]" in str(e.value)
